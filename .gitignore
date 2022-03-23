@@ -1,0 +1,17 @@
+# for ignore git
+# Django Secret Key 및 Naver API Key를 보관하는 파일
+server/secure/
+
+__pycache__/
+
+migrations
+
+*.py[cod]
+
+db.sqlite3
+
+config.ini
+
+server/media/
+
+.idea
