@@ -55,18 +55,26 @@ THIRD_PARTY_APPS = [
     # CORS 설정을 위한 모듈
     'corsheaders',
     # docs를 위한 모듈
-    'drf_yasg'
+    'drf_yasg',
+    'knox',
 ]
 
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
+    'apis.example_user_auth'
+    'apis.user_auth'
 ]
+
+AUTH_USER_MODEL = 'example_user_auth.User'
 
 INSTALLED_APPS = BASIC_DJANGO_APPS + THIRD_PARTY_APPS + OWN_APPS
 
 MIDDLEWARE = [
     # CORS
     'corsheaders.middleware.CorsMiddleware',
+    # white noise
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # Default
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -74,8 +82,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # white noise
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -160,7 +167,8 @@ CORS_ORIGIN_WHITELIST = (
 
 # Rest FrameWork
 REST_FRAMEWORK = {
-    "EXCEPTION_HANDLER": "config.utils.custom_exception_handler"
+    "EXCEPTION_HANDLER": "config.utils.custom_exception_handler",
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
 
 # Swagger
