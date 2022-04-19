@@ -29,7 +29,22 @@ config.read('../config.ini', encoding='UTF-8')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config['DEFAULT']['SECRET_KEY']
+import json
+from django.core.exceptions import ImproperlyConfigured
+
+secret_file = os.path.join(BASE_DIR, 'secure/secret.json')# secrets.json 파일 위치를 명시
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -60,8 +75,10 @@ THIRD_PARTY_APPS = [
 
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
+    'apis.user_api',
 ]
 
+# 모두 딕셔너리에 연결 / OWN_APPS
 INSTALLED_APPS = BASIC_DJANGO_APPS + THIRD_PARTY_APPS + OWN_APPS
 
 MIDDLEWARE = [
@@ -105,8 +122,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # 이후 데이터베이스 추가시 적용
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql', #mysqlclient library 설치
+        'NAME': 'myboard',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 
