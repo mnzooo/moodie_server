@@ -7,3 +7,4 @@ urlpatterns = [
     path("v1/answer", AnswerViewSet.as_view({"get":"list","post":"add"}),name="answers"),
     path("v1/answer/<int:answer_num>",AnswerViewSet.as_view({"get":"list"}),name="answer"),
 ]
+print("Hello")
