@@ -1,7 +1,9 @@
-#클라이언트가 보여질
 from django.urls import path
-from django.conf import settings
+
+from apis.user_api.views import *
 
 urlpatterns = [
-
+    path('profile', UserProfileList.as_view(), name='profile'),
+    path('profile_post', PostProfile.as_view(), name='post_profile'),
+    path('profile/<uuid:pk>/', ProfileDetail.as_view(), name='profile_detail'),
 ]

@@ -13,26 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from config import settings
-# from django.contrib import admin
-# from django.urls import path, include, re_path
-# from rest_framework import routers, permissions
-# from drf_yasg.views import get_schema_view
-# from drf_yasg import openapi
-# from django.conf.urls.static import static
+from config import settings
+from django.contrib import admin
+from django.urls import path, include, re_path
+from rest_framework import routers, permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from django.conf.urls.static import static
 
 # Swagger 정의 됨.
 
 # swagger 정보 설정, 관련 엔드포인트 추가 
-# swagger 엔드포인트는 DEBUG Mode에서만 노출
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import path, re_path
-from drf_yasg import openapi
-from drf_yasg.views import get_schema_view
-from rest_framework import permissions
-
+# swagger 엔드포인트는 DEBUG Mode에서만 노출 
 schema_view = get_schema_view(
     openapi.Info(
         title="Moodie Server API Docs",
@@ -46,15 +38,10 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-from django.urls import include
-from rest_framework.routers import DefaultRouter
-#from .server.apis.user_api import views
-
-#router = DefaultRouter()
-#router.register('answer', views.AnswerViewSet)
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('question/', include('apis.question_api.urls')),
+    path('user/', include('apis.user_api.urls')),
     path('answer/', include(('apis.answer_api.urls')))
 ]
 
