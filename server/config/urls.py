@@ -40,7 +40,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user_api/', include('apis.user_api.urls')),
+    path('question/', include('apis.question_api.urls')),
+    path('user/', include('apis.user_api.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

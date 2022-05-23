@@ -1,15 +1,9 @@
-from django.urls import path, include
-from rest_framework import routers
-from .views import QuestionViewSet, AnswerViewSet, UserViewSet, EmotionViewSet
+from django.urls import path
 
-app_name = 'apis.user_api'
-
-router = routers.DefaultRouter()
-router.register('questions', QuestionViewSet)
-router.register('answers', AnswerViewSet)
-router.register('users', UserViewSet)
-router.register('emotions', EmotionViewSet)
+from apis.user_api.views import *
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('profile', UserProfileList.as_view(), name='profile'),
+    path('profile_post', PostProfile.as_view(), name='post_profile'),
+    path('profile/<uuid:pk>/', ProfileDetail.as_view(), name='profile_detail'),
 ]

@@ -1,22 +1,12 @@
 from rest_framework import serializers
-from .models import User, Answer, Question, Emotion
+from .models import UserProfile
+
+class ProfileListSerializer(serializers.Serializer):
+    name = serializers.CharField(help_text='닉네임', required=False)
+    birthday = serializers.DateField(help_text='생일', required=False)
+    profileImage = serializers.ImageField(help_text='프로필 사진', required=False)
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = '__all__'
-
-class AnswerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Answer
-        fields = '__all__'
-
-class QuestionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Question
-        fields = '__all__'
-
-class EmotionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Emotion
-        fields = '__all__'
+        model = UserProfile
+        fields = ['id', 'name', 'birthday', 'profile_image']
