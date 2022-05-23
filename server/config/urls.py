@@ -55,7 +55,7 @@ from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(("apis.user_api.urls","apis.user_api")))
+    path('answer/', include(('apis.answer_api.urls')))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

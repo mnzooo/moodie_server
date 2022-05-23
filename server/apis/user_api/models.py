@@ -1,6 +1,9 @@
 from django.db import models
 
 # Create your models here.
+
+### 속성이 너무 간단하다. 옵션들을 더 넣어야함. 의미를 명확하게 할 것, 논의가 필요
+# null값이 가능한지에 대한 구체적으로 적어줄 것
 class User(models.Model):
     """
         userEmail: 사용자 이메일
@@ -20,16 +23,3 @@ class Question(models.Model):
     def __str__(self):
         return self.question
 
-class Answer(models.Model):
-    """
-        userEmail: 사용자 이메일
-        question: 하루 문답
-        answer: 답변
-        createdAt: 작성일
-        updatedAt: 수정일
-    """
-    userEmail = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.CharField(max_length=200)
-    createdAt = models.DateTimeField(auto_now_add=True)
-    updatedAt = models.DateTimeField(auto_now=True)

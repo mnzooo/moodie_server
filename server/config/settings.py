@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
     'apis.user_api',
+    'apis.answer_api',
 ]
 
 # 모두 딕셔너리에 연결 / OWN_APPS
