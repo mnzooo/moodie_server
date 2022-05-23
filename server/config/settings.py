@@ -60,6 +60,8 @@ THIRD_PARTY_APPS = [
 
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
+    'apis.user_api.apps.UserApiConfig',
+    'apis.question_api',
 ]
 
 INSTALLED_APPS = BASIC_DJANGO_APPS + THIRD_PARTY_APPS + OWN_APPS
@@ -105,8 +107,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # 이후 데이터베이스 추가시 적용
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'moodie',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
 
