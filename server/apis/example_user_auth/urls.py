@@ -1,10 +1,9 @@
-# api/urls.py
-from django.urls import path, include
-from .views import HelloAPI, RegistrationAPI, LoginAPI, UserAPI
+from django.urls import path
+
+from apis.user_api.views import *
 
 urlpatterns = [
-    path("hello/", HelloAPI),
-    path("auth/register/", RegistrationAPI.as_view()),
-    path("auth/login/", LoginAPI.as_view()),
-    path("auth/user/", UserAPI.as_view()),
+    path('profile', UserProfileList.as_view(), name='profile'),
+    path('profile_post', PostProfile.as_view(), name='post_profile'),
+    path('profile/<uuid:pk>/', ProfileDetail.as_view(), name='profile_detail'),
 ]
