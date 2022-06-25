@@ -20,7 +20,6 @@ import sys, os
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import configparser
-from urllib.parse import quote_plus as urlquote
 
 config = configparser.ConfigParser()
 config.read('../config.ini', encoding='UTF-8')
@@ -30,6 +29,8 @@ config.read('../config.ini', encoding='UTF-8')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config['DEFAULT']['SECRET_KEY']
+# 테스트할 때는 Secret Code 노출
+# SECRET_KEY = os.environ.get("S  ECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -61,7 +62,7 @@ THIRD_PARTY_APPS = [
 
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
-    'apis.example_user_auth'
+    'apis.example_user_auth',
     'apis.user_auth'
 ]
 

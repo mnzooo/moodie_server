@@ -13,6 +13,8 @@ freezegun = "*"
 coverage = "*"
 faker = "*"
 django-rest-knox = "*"
+pytest-django = "*"
+pillow = "*"
 
 [dev-packages]
 
