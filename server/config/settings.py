@@ -62,13 +62,10 @@ THIRD_PARTY_APPS = [
 
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
-<<<<<<< HEAD
     'apis.example_user_auth',
-    'apis.user_auth'
-=======
-    'apis.user_api.apps.UserApiConfig',
     'apis.question_api',
->>>>>>> 9462e4578f619654c5e4a89d568fb8acd9241c45
+    'apis.user_auth',
+    'apis.user_api',
 ]
 
 AUTH_USER_MODEL = 'example_user_auth.User'
