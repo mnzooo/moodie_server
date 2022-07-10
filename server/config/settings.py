@@ -62,13 +62,9 @@ THIRD_PARTY_APPS = [
 
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
-    'apis.example_user_auth',
     'apis.question_api',
     'apis.user_auth',
-    'apis.user_api',
 ]
-
-AUTH_USER_MODEL = 'example_user_auth.User'
 
 INSTALLED_APPS = BASIC_DJANGO_APPS + THIRD_PARTY_APPS + OWN_APPS
 
@@ -118,9 +114,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'moodie',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'tpwnd2315!',
         'HOST': 'localhost',
-        'PORT': ''
+        'PORT': '3306'
     }
 }
 
