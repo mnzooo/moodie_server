@@ -1,7 +1,9 @@
 from django.db import models
-from apis.user_api.models import UserProfile
 
 # Create your models here.
+from apis.user_auth.models import UserProfile
+
+
 class Question(models.Model):
     id = models.AutoField(verbose_name='질문 인덱스', primary_key=True)
     question = models.CharField(verbose_name='질문', max_length=200)
