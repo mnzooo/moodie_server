@@ -62,7 +62,7 @@ OWN_APPS = [
     # 우리가 생성한 애플리케이션
     'apis.user_api.apps.UserApiConfig',
     'apis.question_api',
-    'apis.user_api',
+    #'apis.user_api',
     'apis.answer_api',
 ]
 
