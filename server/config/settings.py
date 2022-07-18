@@ -30,6 +30,8 @@ config.read('../config.ini', encoding='UTF-8')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config['DEFAULT']['SECRET_KEY']
+# 테스트할 때는 Secret Code 노출
+# SECRET_KEY = os.environ.get("S  ECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -55,14 +57,15 @@ THIRD_PARTY_APPS = [
     # CORS 설정을 위한 모듈
     'corsheaders',
     # docs를 위한 모듈
-    'drf_yasg'
+    'drf_yasg',
+    'knox',
 ]
 
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
     'apis.question_api',
+    'apis.user_auth',
     'apis.answer_api',
-    'apis.user_api',
 ]
 
 INSTALLED_APPS = BASIC_DJANGO_APPS + THIRD_PARTY_APPS + OWN_APPS
@@ -70,6 +73,9 @@ INSTALLED_APPS = BASIC_DJANGO_APPS + THIRD_PARTY_APPS + OWN_APPS
 MIDDLEWARE = [
     # CORS
     'corsheaders.middleware.CorsMiddleware',
+    # white noise
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # Default
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,8 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # white noise
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -167,7 +172,8 @@ CORS_ORIGIN_WHITELIST = (
 
 # Rest FrameWork
 REST_FRAMEWORK = {
-    "EXCEPTION_HANDLER": "config.utils.custom_exception_handler"
+    "EXCEPTION_HANDLER": "config.utils.custom_exception_handler",
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
 
 # Swagger
