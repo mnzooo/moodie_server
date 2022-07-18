@@ -4,9 +4,8 @@ from django.shortcuts import render
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.status import *
 from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, get_object_or_404
 from rest_framework.views import APIView
-
 from apis.answer_api.models import Answer
 from apis.answer_api.serializers import AnswerSerializer, AnswerListSerializer
 
@@ -16,6 +15,7 @@ class AnswerList(APIView):
 
     @swagger_auto_schema(
         tags=['답변 목록'],
+        description = '', # Input값 작성
     )
 
     # 답변 조회
@@ -29,6 +29,8 @@ class AnswerList(APIView):
         return Response(serializeded_data, status=HTTP_200_OK)
 
 class AnswerApiView(GenericAPIView):
+    serializer_class = AnswerSerializer
+
     '''
     답변 API (등록, 수정, 조회)
     - 하루 문답에 대한 답변을 저장
@@ -48,10 +50,17 @@ class AnswerApiView(GenericAPIView):
             return Response(serializer.data, status=HTTP_201_CREATED)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
-    # def get_object(self, pk):
-    #     return get_object_or_404(Answer, pk=pk)
+    @swagger_auto_schema(
+        tags=['답변 수정'],
+        request_body=AnswerSerializer,
+    )
 
-    def put(self, request, pk, format=None):
+    def get_object(self, pk):
+        return get_object_or_404(Answer, pk=pk)
+
+    # def put(self, request, pk, format=None):
+    def put(self, request, *args, **kwargs):
+        pk = self.kwargs.put('pk')
         answer = self.get_object(pk)
         serializer = AnswerSerializer(answer, data=request.data)
         if serializer.is_valid():
@@ -59,7 +68,13 @@ class AnswerApiView(GenericAPIView):
             return Response(serializer.data, status=HTTP_200_OK)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
-    def get(self, request, pk, format=None):
+    @swagger_auto_schema(
+        tags=['답변 상세 조회'],
+    )
+
+    # def get(self, request, pk, format=None):
+    def get(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
         answer = self.get_object(pk)
         serializer = AnswerSerializer(answer)
         return Response(serializer.data)

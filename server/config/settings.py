@@ -61,8 +61,8 @@ THIRD_PARTY_APPS = [
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
     'apis.question_api',
-    #'apis.user_api',
     'apis.answer_api',
+    'apis.user_api',
 ]
 
 INSTALLED_APPS = BASIC_DJANGO_APPS + THIRD_PARTY_APPS + OWN_APPS
