@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-from apis.user_api.models import User, Question
+from apis.question_api.models import Question
 
 class Answer(models.Model):
     """

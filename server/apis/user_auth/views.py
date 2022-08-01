@@ -19,7 +19,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(
 class IdTokenLogin(GenericAPIView):
     serializer_class = TokenLoginSerializer
 
-    cred = credentials.Certificate("C:\\Users\\rnlgksclsrn\\.ssh\\moodie_firebase_auth_private_key.json")
+    cred = credentials.Certificate("C:\ott_project\moodie-server\moodie_firebase_auth_private_key.json")
     default_app = firebase_admin.initialize_app(cred)
 
     @swagger_auto_schema(

@@ -46,7 +46,7 @@ class AnswerApiView(GenericAPIView):
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            #serializer.save()
             return Response(serializer.data, status=HTTP_201_CREATED)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
@@ -58,9 +58,9 @@ class AnswerApiView(GenericAPIView):
     def get_object(self, pk):
         return get_object_or_404(Answer, pk=pk)
 
-    # def put(self, request, pk, format=None):
-    def put(self, request, *args, **kwargs):
-        pk = self.kwargs.put('pk')
+    def put(self, request, pk, format=None):
+    #def put(self, request, *args, **kwargs):
+        #pk = self.kwargs.put('pk')
         answer = self.get_object(pk)
         serializer = AnswerSerializer(answer, data=request.data)
         if serializer.is_valid():
@@ -72,9 +72,9 @@ class AnswerApiView(GenericAPIView):
         tags=['답변 상세 조회'],
     )
 
-    # def get(self, request, pk, format=None):
-    def get(self, request, *args, **kwargs):
-        pk = self.kwargs.get('pk')
+    def get(self, request, pk, format=None):
+    #def get(self, request, *args, **kwargs):
+        #pk = self.kwargs.get('pk')
         answer = self.get_object(pk)
         serializer = AnswerSerializer(answer)
         return Response(serializer.data)
