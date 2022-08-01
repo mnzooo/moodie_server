@@ -114,10 +114,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', #mysqlclient library 설치
-        'NAME': 'myboard',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'NAME': config['MARIADB']['DB_NAME'],
+        'USER': config['MARIADB']['USER'],
+        'PASSWORD': config['MARIADB']['PASSWORD'],
+        'HOST': config['MARIADB']['HOST'],
         'PORT': '3306'
     }
 }

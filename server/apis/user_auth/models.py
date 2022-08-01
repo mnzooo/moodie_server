@@ -21,13 +21,3 @@ class User(models.Model):
     userEmail = models.EmailField(unique=True, default=0)
     name = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
-
-
-class Question(models.Model):
-    """
-        question: 하루 문답
-    """
-    question = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.question
