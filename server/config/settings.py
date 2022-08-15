@@ -30,6 +30,7 @@ config.read('../config.ini', encoding='UTF-8')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config['DEFAULT']['SECRET_KEY']
+# SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -55,13 +56,15 @@ THIRD_PARTY_APPS = [
     # CORS 설정을 위한 모듈
     'corsheaders',
     # docs를 위한 모듈
-    'drf_yasg'
+    'drf_yasg',
+    'drf_firebase_auth',
+    'firebase_admin',
 ]
 
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
-    'apis.user_api.apps.UserApiConfig',
     'apis.question_api',
+    'apis.user_api',
 ]
 
 INSTALLED_APPS = BASIC_DJANGO_APPS + THIRD_PARTY_APPS + OWN_APPS
@@ -166,13 +169,23 @@ CORS_ORIGIN_WHITELIST = (
 
 # Rest FrameWork
 REST_FRAMEWORK = {
-    "EXCEPTION_HANDLER": "config.utils.custom_exception_handler"
+    "EXCEPTION_HANDLER": "config.utils.custom_exception_handler",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "config.authentication.FirebaseAuthentication",
+    ),
 }
 
 # Swagger
 SWAGGER_SETTINGS = {
-    'VALIDATOR_URL': None,
-}
+      'SECURITY_DEFINITIONS': {
+         'DRF Token': {
+               'type': 'apiKey',
+               'name': 'Authorization',
+               'in': 'header'
+         }
+      }
+   }
 
 # static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

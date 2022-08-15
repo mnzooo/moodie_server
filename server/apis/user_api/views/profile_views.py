@@ -1,16 +1,18 @@
 from django.db import transaction
 from django.shortcuts import render
 from drf_yasg.utils import swagger_auto_schema
-from .serializer import UserSerializer, ProfileListSerializer
-from .models import UserProfile
+from apis.user_api.serializer import UserSerializer, ProfileListSerializer
+from apis.user_api.models import UserProfile
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404, GenericAPIView
 
+class UserProfileList(GenericAPIView):
+    serializer_class = UserSerializer
+    parser_classes = (MultiPartParser,)
 
-class UserProfileList(APIView):
     @swagger_auto_schema(
         tags=['프로필 조회'],
     )
@@ -20,13 +22,10 @@ class UserProfileList(APIView):
         serializer = ProfileListSerializer(profile, many=True)
         return Response(serializer.data)
 
-class PostProfile(GenericAPIView):
-    serializer_class = UserSerializer
-    parser_classes = (MultiPartParser,)
-
     @swagger_auto_schema(
         tags=['프로필 생성'],
-        request_body=UserSerializer,
+        operation_description='프로필을 생성함',
+        request_body=ProfileListSerializer,
     )
     @transaction.atomic
     def post(self, request):
@@ -37,12 +36,9 @@ class PostProfile(GenericAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ProfileDetail(APIView):
-    def get_object(self, pk):
-        return get_object_or_404(UserProfile, pk=pk)
-
     @swagger_auto_schema(
         tags=['프로필 수정'],
+        operation_description='프로필을 수정함',
         request_body=UserSerializer,
     )
     @transaction.atomic
@@ -56,6 +52,7 @@ class ProfileDetail(APIView):
 
     @swagger_auto_schema(
         tags=['프로필 삭제'],
+        operation_description='프로필을 삭제함',
         request_body=UserSerializer,
     )
     @transaction.atomic
