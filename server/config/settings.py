@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import firebase_admin
+
+from config.secure import cred
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 보안을 위해 분리한 파일 
@@ -32,6 +36,11 @@ config.read('../config.ini', encoding='UTF-8')
 SECRET_KEY = config['DEFAULT']['SECRET_KEY']
 # 테스트할 때는 Secret Code 노출
 # SECRET_KEY = os.environ.get("S  ECRET_KEY")
+
+# firebase auth 적용
+if not firebase_admin._apps:
+    default_app = firebase_admin.initialize_app(cred)
+# firebase_admin.delete_app(firebase_admin.get_app())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -179,6 +188,13 @@ REST_FRAMEWORK = {
 # Swagger
 SWAGGER_SETTINGS = {
     'VALIDATOR_URL': None,
+    'SECURITY_DEFINITIONS': {
+             'DRF Token': {
+                   'type': 'apiKey',
+                   'name': 'Authorization',
+                   'in': 'header'
+             }
+          },
 }
 
 # static files

@@ -6,6 +6,8 @@ from rest_framework import serializers, views
 from rest_framework.response import Response
 from firebase_admin import auth, credentials
 from rest_framework.generics import GenericAPIView
+
+from .modules.firebase_token_generator import get_id_token
 from .serializers import EmailLoginSerializer, TokenLoginSerializer
 from rest_framework.status import *
 import sys, os
@@ -20,7 +22,6 @@ class IdTokenLogin(GenericAPIView):
     serializer_class = TokenLoginSerializer
     ROOT_DIR = os.path.dirname(os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
     cred = credentials.Certificate(ROOT_DIR+"\moodie_firebase_auth_private_key.json")
-    default_app = firebase_admin.initialize_app(cred)
 
     @swagger_auto_schema(
         operation_summary='토큰 로그인 API',
@@ -55,3 +56,13 @@ class IdTokenLogin(GenericAPIView):
 
         else:
             raise ValueError
+
+class DummyIdToken(GenericAPIView):
+    @swagger_auto_schema(
+        tags=['Firebase ID 토큰'],
+        operation_summary='더미 ID 토큰 발급 API',
+    )
+    def get(self, request):
+        user_uid = "nMESHnruiDgZnAGHaPpMk0XduZo2"
+        id_token = get_id_token(user_uid)
+        return Response(data={'idToken': id_token}, status=HTTP_200_OK)

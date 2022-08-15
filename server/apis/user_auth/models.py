@@ -13,11 +13,6 @@ class UserProfile(models.Model):
 ### 속성이 너무 간단하다. 옵션들을 더 넣어야함. 의미를 명확하게 할 것, 논의가 필요
 # null값이 가능한지에 대한 구체적으로 적어줄 것
 class User(models.Model):
-    """
-        userEmail: 사용자 이메일
-        name: 사용자 이름
-        password: 사용자 비밀번호
-    """
-    userEmail = models.EmailField(unique=True, default=0)
-    name = models.CharField(max_length=30)
-    password = models.CharField(max_length=30)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    firebase_uid = models.CharField(verbose_name='파이어베이스 uid', max_length=200, null=False, default="")
+

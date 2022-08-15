@@ -10,4 +10,4 @@ class EmailLoginSerializer(serializers.Serializer):
 
 class TokenLoginSerializer(serializers.Serializer):
     # 로그인 API 입력 JSON화
-    idToken = serializers.CharField(help_text="id 토큰", required=True)
+    firebase_uid = serializers.CharField(help_text="파이어베이스 uid", required=True)
