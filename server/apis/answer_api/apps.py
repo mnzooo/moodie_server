@@ -1,6 +1,5 @@
 from django.apps import AppConfig
 
-
-class UserApiConfig(AppConfig):
+class AnswerApiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apis.user_api'
+    name = 'apis.answer_api'

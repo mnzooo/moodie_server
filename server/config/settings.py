@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import firebase_admin
+
+from config.secure import cred
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 보안을 위해 분리한 파일 
@@ -30,7 +34,13 @@ config.read('../config.ini', encoding='UTF-8')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config['DEFAULT']['SECRET_KEY']
-# SECRET_KEY = os.environ.get("SECRET_KEY")
+# 테스트할 때는 Secret Code 노출
+# SECRET_KEY = os.environ.get("S  ECRET_KEY")
+
+# firebase auth 적용
+if not firebase_admin._apps:
+    default_app = firebase_admin.initialize_app(cred)
+# firebase_admin.delete_app(firebase_admin.get_app())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,15 +66,18 @@ THIRD_PARTY_APPS = [
     # CORS 설정을 위한 모듈
     'corsheaders',
     # docs를 위한 모듈
-    'drf_yasg',
     'drf_firebase_auth',
     'firebase_admin',
+    'drf_yasg',
+    'knox',
 ]
 
 OWN_APPS = [
     # 우리가 생성한 애플리케이션
+    'apis.user_api.apps.UserApiConfig',
     'apis.question_api',
-    'apis.user_api',
+    'apis.user_auth',
+    'apis.answer_api',
 ]
 
 INSTALLED_APPS = BASIC_DJANGO_APPS + THIRD_PARTY_APPS + OWN_APPS
@@ -110,12 +123,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # 이후 데이터베이스 추가시 적용
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'moodie',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': ''
+        'ENGINE': 'django.db.backends.mysql', #mysqlclient library 설치
+        'NAME': config['MARIADB']['DB_NAME'],
+        'USER': config['MARIADB']['USER'],
+        'PASSWORD': config['MARIADB']['PASSWORD'],
+        'HOST': config['MARIADB']['HOST'],
+        'PORT': '3306'
     }
 }
 
@@ -173,19 +186,21 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
         "config.authentication.FirebaseAuthentication",
+        "knox.auth.TokenAuthentication",
     ),
 }
 
 # Swagger
 SWAGGER_SETTINGS = {
-      'SECURITY_DEFINITIONS': {
-         'DRF Token': {
-               'type': 'apiKey',
-               'name': 'Authorization',
-               'in': 'header'
-         }
-      }
-   }
+    'VALIDATOR_URL': None,
+    'SECURITY_DEFINITIONS': {
+             'DRF Token': {
+                   'type': 'apiKey',
+                   'name': 'Authorization',
+                   'in': 'header'
+             }
+          },
+}
 
 # static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

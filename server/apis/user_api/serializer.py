@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile, UserAccount
+from .models import UserProfile
 
 class ProfileListSerializer(serializers.Serializer):
     name = serializers.CharField(help_text='닉네임', required=False)
