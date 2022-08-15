@@ -76,7 +76,6 @@ OWN_APPS = [
     # 우리가 생성한 애플리케이션
     'apis.user_api.apps.UserApiConfig',
     'apis.question_api',
-    'apis.user_auth',
     'apis.answer_api',
 ]
 
@@ -184,9 +183,6 @@ CORS_ORIGIN_WHITELIST = (
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "config.utils.custom_exception_handler",
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
-        "config.authentication.FirebaseAuthentication",
-        "knox.auth.TokenAuthentication",
     ),
 }
 

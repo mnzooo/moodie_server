@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 from apis.question_api.models import Question
-from apis.user_auth.models import User
+from apis.user_api.models import User
 
 
 class Emotion(models.Model):
@@ -19,5 +19,3 @@ class Answer(models.Model):
     emotion = models.OneToOneField(Emotion, on_delete=models.CASCADE, null=True)
     createdAt = models.DateTimeField(verbose_name='생성일', auto_now_add=True)
     updatedAt = models.DateTimeField(verbose_name='수정일', auto_now=True)
-
-

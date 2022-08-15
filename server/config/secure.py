@@ -2,7 +2,7 @@ import os
 import firebase_admin
 from firebase_admin import credentials
 
-cred = credentials.Certificate("C:\ott_project\moodie-server\moodie_firebase_auth_private_key.json")
+cred = credentials.Certificate("C:\\Users\\key\\moodie-91484-firebase-adminsdk-5znhq-a8259d48de.json")
 
 
 # django secret key

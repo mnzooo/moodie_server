@@ -1,14 +1,13 @@
-import firebase_admin
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
-from firebase_admin import auth, credentials
+from firebase_admin import auth
 from rest_framework.generics import GenericAPIView
 from apis.user_api.serializer import UIDSerializer
 from rest_framework.status import *
 
 import os, sys
 
-from apis.user_api.firebase_token_generator import get_id_token
+from apis.user_api.modules.firebase_token_generator import get_id_token
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))))
 

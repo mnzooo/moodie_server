@@ -8,10 +8,6 @@ from apis.user_api.exceptions import NoAuthToken, InvalidAuthToken, FirebaseErro
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))))
 
-if not firebase_admin._apps:
-    cred = credentials.Certificate("C:\\Users\\key\\moodie-91484-firebase-adminsdk-5znhq-a8259d48de.json")
-    default_app = firebase_admin.initialize_app(cred)
-
 class FirebaseAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         auth_header = request.META.get("HTTP_AUTHORIZATION")
